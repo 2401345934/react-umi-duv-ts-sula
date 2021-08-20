@@ -1,18 +1,9 @@
-/*
- * @Author: your name
- * @Date: 2021-08-19 22:37:41
- * @LastEditTime: 2021-08-19 22:49:07
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \xiaominghui\react-umi-duv-ts-sula\src\global.tsx
- */
 import { Button, message, notification } from 'antd';
 import { useIntl } from 'umi';
 import defaultSettings from '../config/defaultSettings';
-
+import './plugins';
 const { pwa } = defaultSettings;
 const isHttps = document.location.protocol === 'https:';
-import './plugins';
 
 // if pwa is true
 if (pwa) {

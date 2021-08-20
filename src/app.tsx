@@ -2,13 +2,12 @@ import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from 'umi';
 import { history, Link } from 'umi';
-import { notification } from 'antd';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
+import { notification } from 'antd';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import { handleRequestHeader } from './utils/requestUtils';
-import { RequestConfig } from './.umi/plugin-request/request';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -85,6 +84,17 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   };
 };
 
+// 请求拦截
+const requestInterceptors = [
+  (url: string, options: any) => {
+    const handleOptions = handleRequestHeader(options);
+    return {
+      url,
+      options: handleOptions,
+    };
+  },
+];
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -121,11 +131,11 @@ const errorHandler = (error: ResponseError) => {
         onClose: async () => {
           localStorage.removeItem('userInfo');
           localStorage.removeItem('buttonAuth');
-          // if (window.location.pathname !== '/user/login') {
-          //   history.replace({
-          //     pathname: '/user/login',
-          //   });
-          // }
+          if (window.location.pathname !== '/user/login') {
+            history.replace({
+              pathname: '/user/login',
+            });
+          }
         },
       });
     } else {
@@ -144,17 +154,6 @@ const errorHandler = (error: ResponseError) => {
   }
   throw error;
 };
-
-// 请求拦截
-const requestInterceptors = [
-  (url: string, options: any) => {
-    const handleOptions = handleRequestHeader(options);
-    return {
-      url,
-      options: handleOptions,
-    };
-  },
-];
 
 export const request: RequestConfig = {
   errorHandler,

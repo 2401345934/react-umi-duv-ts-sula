@@ -4,7 +4,7 @@
  * @LastEditTime: 2021-07-09 17:03:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \workbench-sharing-front\src\common\ENUM.ts
+ * @FilePath: \purchase-platform-front\src\common\ENUM.ts
  */
 const ENUM = {
   /* 营销中心 --------------------------------------------------- */

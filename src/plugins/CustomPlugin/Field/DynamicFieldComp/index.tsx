@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field } from 'bssula';
+import {  Field } from 'bssula';
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 
@@ -11,7 +11,11 @@ const DynamicFieldComp = (props: any) => {
       {fields.map((field: any) => {
         const { name, key, fieldKey, ...rest } = field;
         return (
-          <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+          <Space
+            key={key}
+            style={{ display: 'flex', marginBottom: 8 }}
+            align="baseline"
+          >
             {props.fields.map((fieldConfig: any) => {
               return (
                 <Field
@@ -24,7 +28,10 @@ const DynamicFieldComp = (props: any) => {
                 />
               );
             })}
-            <MinusCircleOutlined onClick={() => remove(field.name)} key="remove" />
+            <MinusCircleOutlined
+              onClick={() => remove(field.name)}
+              key="remove"
+            />
           </Space>
         );
       })}

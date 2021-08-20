@@ -1,10 +1,10 @@
 /*
  * @Author: your name
  * @Date: 2021-07-05 15:35:56
- * @LastEditTime: 2021-07-17 19:19:11
+ * @LastEditTime: 2021-08-12 18:22:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \workbench-sharing-front\src\plugins\CustomPlugin\Field\BsBuyInformation\index.tsx
+ * @FilePath: \purchase-platform-front\src\plugins\CustomPlugin\Field\BsBuyInformation\index.tsx
  */
 // @ts-nocheck
 
@@ -15,6 +15,7 @@ import moment from 'moment';
 
 const BsInformation = forwardRef((props: any, ref: any) => {
   const [init, setInit]: any = useState(true);
+  const { detail = {} }: any = props;
   const [form] = Form.useForm();
   const [information, setInformation]: any = useState(props.value || []);
   const [isAddObj, setAddObj]: any = useState({});
@@ -57,7 +58,7 @@ const BsInformation = forwardRef((props: any, ref: any) => {
                       </Descriptions.Item>
                     </Descriptions>
                   )}
-                  {rowIndex + 1 === information.length && (
+                  {rowIndex + 1 === information.length && detail.status !== 3 && (
                     <Row key={rowIndex} style={{ width: '100%' }}>
                       <Col span={12}>
                         <Form.Item

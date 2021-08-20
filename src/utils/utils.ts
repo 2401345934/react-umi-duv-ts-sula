@@ -2,6 +2,7 @@ import { message } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
 import qs from 'qs';
+import { request } from 'bssula';
 
 const reg =
   /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
@@ -126,26 +127,6 @@ export const handleConvertParams = (
   return ParamsResult;
 };
 
-export const handleConvertSorter = (sorter: object) => {
-  let SorterResult = {};
-  // @ts-ignore
-  let SorterOrder = sorter?.order;
-  const SorterColumnKey = sorter?.columnKey;
-
-  if (sorter && SorterOrder) {
-    if (SorterOrder === 'ascend') {
-      SorterOrder = 'asc';
-    } else if (SorterOrder === 'descend') {
-      SorterOrder = 'desc';
-    }
-    SorterResult = {
-      sorter: `${SorterOrder}-${SorterColumnKey}` || 'desc-modifyTime',
-    };
-  }
-
-  return SorterResult;
-};
-
 // 格式化table响应数据
 export const handleConvertResponse = (items: any, total: number): object => {
   const result = {
@@ -180,28 +161,14 @@ export const handleCoverSelectData = (
 };
 
 // 处理由form和上传组件构成的结构中  需要上传的url
-export function handleOssUrl(fileList: any[], type?: string) {
+export function handleOssUrl(fileList: any[]) {
   let result = {};
 
   if (fileList && fileList.length) {
     if (handleError(fileList[0].response)) {
-      if (type === 'centerDocument') {
-        result = {
-          ossUrl: fileList[0].response.data.ossUrl,
-          documentName: fileList[0].response.data.documentName,
-        };
-      }
-      if (type === 'baseInfoCard') {
-        result = {
-          licenseUrl: fileList[0].response.data.ossUrl,
-          documentName: fileList[0].response.data.documentName,
-        };
-      }
-      if (!type) {
-        result = {
-          imgUrl: fileList[0].response.data.url,
-        };
-      }
+      result = {
+        imgUrl: fileList[0].response.data.url,
+      };
     }
   }
 
@@ -348,16 +315,10 @@ export function handleBaseUrlPre(baseName: string) {
       result = '/dcopis/api';
       break;
     case 'bop':
-      result = '/bop/api';
+      result = '/bop/api/';
       break;
     case 'purchasing':
       result = '/purchasing/api';
-      break;
-    case 'purchdemand':
-      result = '/purchdemand/api';
-      break;
-    case 'mca':
-      result = '/mca/api';
       break;
     default:
       break;
@@ -464,20 +425,224 @@ export function validatorLength(value: any, num: number) {
 
 export function treeKeys(tree: any, keys: any) {
   const keysList: any = [];
-  const cloneDeepKeys = (arr: any) => {
-    arr.forEach((element: any) => {
-      keysList.push(element[keys]);
-    });
+  const loopFunction = (item: any) => {
+    keysList.push(item[keys]);
+    if (Array.isArray(item.children) && item.children.length) {
+      item.children.forEach((child: any) => loopFunction(child));
+    }
   };
   if (tree && Array.isArray(tree) && tree.length > 0) {
-    cloneDeepKeys(tree);
-    tree.forEach((d) => {
-      if (d.children && Array.isArray(d.children)) {
-        cloneDeepKeys(d.children);
-      }
-    });
+    loopFunction(tree[0]);
   }
   return keysList || [];
+}
+
+export function uuid() {
+  var s = [];
+  var hexDigits = '0123456789abcdef';
+  for (var i = 0; i < 36; i++) {
+    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+  }
+  s[14] = '4'; // bits 12-15 of the time_hi_and_version field to 0010
+  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+  s[8] = s[13] = s[18] = s[23] = '-';
+
+  var uuid = s.join('');
+  return uuid;
+}
+
+export const handleExport = (params: any, url: any, methods?: any) => {
+  // 数组对象处理,对带有特殊标记的name进行处理
+  for (const key in params) {
+    if (Object.prototype.hasOwnProperty.call(params, key)) {
+      const element = params[key];
+      if (element && key.indexOf('*number*') >= 0) {
+        const dataParams = key.split('*number*');
+        dataParams.forEach((value, index) => {
+          params[value] = element[index];
+        });
+        delete params[key];
+      } else if (element && key.indexOf('*address*') >= 0) {
+        const dataParams = key.split('*address*');
+        dataParams.forEach((value, index) => {
+          params[value] = element.PCDCode[index];
+        });
+        delete params[key];
+      } else if (element && key.indexOf('*costType*') >= 0) {
+        const dataParams = key.split('*costType*');
+        // eslint-disable-next-line prefer-destructuring
+        params[dataParams[0]] = element[1];
+        delete params[key];
+      } else if (element && key.indexOf('*fullDate*') >= 0) {
+        const dataParams = key.split('*fullDate*');
+        dataParams.forEach((value, index) => {
+          if (index === 0) {
+            params[value] = moment(element[index])
+              .millisecond(0)
+              .second(0)
+              .minute(0)
+              .hour(0)
+              .format('YYYY-MM-DD HH:mm:ss');
+          } else {
+            params[value] = moment(element[index])
+              .millisecond(59)
+              .second(59)
+              .minute(59)
+              .hour(23)
+              .format('YYYY-MM-DD HH:mm:ss');
+          }
+        });
+        delete params[key];
+      } else if (element && key.indexOf('*commonDate*') >= 0) {
+        const dataParams = key.split('*commonDate*');
+        dataParams.forEach((value, index) => {
+          if (index === 0) {
+            params[value] = moment(element[index])
+              .millisecond(0)
+              .second(0)
+              .minute(0)
+              .hour(0)
+              .format('YYYY-MM-DD');
+          } else {
+            params[value] = moment(element[index])
+              .millisecond(59)
+              .second(59)
+              .minute(59)
+              .hour(23)
+              .format('YYYY-MM-DD');
+          }
+        });
+        delete params[key];
+      } else if (element && key.indexOf('*') >= 0) {
+        const dataParams = key.split('*');
+        dataParams.forEach((value, index) => {
+          params[value] = element[index].format('YYYY-MM-DD HH:mm:ss');
+        });
+        delete params[key];
+      } else if (Array.isArray(element)) {
+        params[key] = element.join(',');
+      }
+    }
+  }
+
+  const urls = methods
+    ? `${handleBaseUrlPre('purchasing')}/${url}`
+    : `${handleBaseUrlPre('purchasing')}/${url}?${qs.stringify(params)}`;
+  request({
+    url: urls,
+    method: methods || 'GET',
+    params: methods ? params : {},
+    converter: ({ data }: any) => {
+      const save_link = document.createElement('a');
+      save_link.href = data;
+      save_link.click();
+    },
+  });
+};
+
+export const totalHandleParams = (params: any = {}) => {
+  // 数组对象处理,对带有特殊标记的name进行处理
+  for (const key in params) {
+    if (Object.prototype.hasOwnProperty.call(params, key)) {
+      const element = params[key];
+      if (element && key.indexOf('*number*') >= 0) {
+        const dataParams = key.split('*number*');
+        dataParams.forEach((value, index) => {
+          params[value] = element[index];
+        });
+        delete params[key];
+      } else if (element && key.indexOf('*address*') >= 0) {
+        const dataParams = key.split('*address*');
+        dataParams.forEach((value, index) => {
+          params[value] = element.PCDCode[index];
+        });
+        delete params[key];
+      } else if (element && key.indexOf('*costType*') >= 0) {
+        const dataParams = key.split('*costType*');
+        // eslint-disable-next-line prefer-destructuring
+        params[dataParams[0]] = element[1];
+        delete params[key];
+      } else if (element && key.indexOf('*fullDate*') >= 0) {
+        const dataParams = key.split('*fullDate*');
+        dataParams.forEach((value, index) => {
+          if (index === 0) {
+            params[value] = moment(element[index])
+              .millisecond(0)
+              .second(0)
+              .minute(0)
+              .hour(0)
+              .format('YYYY-MM-DD HH:mm:ss');
+          } else {
+            params[value] = moment(element[index])
+              .millisecond(59)
+              .second(59)
+              .minute(59)
+              .hour(23)
+              .format('YYYY-MM-DD HH:mm:ss');
+          }
+        });
+        delete params[key];
+      } else if (element && key.indexOf('*dateType*') >= 0) {
+        const dataParams = key.split('*dateType*');
+        dataParams.forEach((value, index) => {
+          if (index === 0) {
+            params[value] = moment(element[index]).format('YYYY-MM-DD');
+          } else {
+            params[value] = moment(element[index]).format('YYYY-MM-DD');
+          }
+        });
+        delete params[key];
+      } else if (Array.isArray(element)) {
+        params[key] = element.join(',');
+      }
+    }
+  }
+
+  return qs.stringify(params);
+};
+
+export const coverTableFunc = (ctx: any) => {
+  const { data, response } = ctx;
+  // 处理错误
+  const list =
+    (data?.items?.length &&
+      data.items.map((item: any, index: number) => {
+        return {
+          ...item,
+          keyIndex: `${index + 1}`,
+        };
+      })) ||
+    [];
+
+  return {
+    list,
+    total: data?.total || data?.totalCount || 0,
+  };
+};
+
+export const getLocalStoreageCustomerCode = () => {
+  return localStorage.getItem('customerCode');
+};
+
+/* 获取url后面的参数 */
+export function getQueryString(name: any) {
+  var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+  var r = globalThis?.location?.search.substr(1).match(reg);
+  if (r != null) return decodeURI(r[2]);
+  return null;
+}
+
+export function navgirTo() {
+  const resposne = JSON.parse(localStorage.getItem('userInfo') || '{}');
+  const sessionId = resposne?.sessionId || '';
+  // @ts-ignore
+  if (REACT_APP_ENV === 'test') {
+    window.open(
+      `http://pd.cad3d1eff5c2440cb944a0a8b3c180734.cn-shenzhen.alicontainer.com/?sessionId=${sessionId}`,
+    );
+  } else {
+    window.open(`http://139.196.74.48:8407/?sessionId=${sessionId}`);
+  }
 }
 
 export const windowOpen = (href: string) => {

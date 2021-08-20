@@ -47,25 +47,26 @@
     "not ie <= 10"
   ],
   "dependencies": {
-    "@ant-design/icons": "^4.5.0",
+    "@ant-design/icons": "^4.0.0",
     "@ant-design/pro-descriptions": "^1.6.8",
     "@ant-design/pro-form": "^1.18.3",
     "@ant-design/pro-layout": "^6.15.3",
     "@ant-design/pro-table": "^2.30.8",
+    "braft-editor": "^2.3.9",
     "@umijs/route-utils": "^1.0.36",
     "antd": "^4.14.0",
-    "braft-editor": "^2.3.9",
-    "bssula": "^1.0.10",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
+    "bssula": "^1.0.10",
+    "umi-plugin-bssula": "^1.0.10",
     "moment": "^2.25.3",
     "omit.js": "^2.0.2",
+    "qs": "^6.9.0",
     "react": "^17.0.0",
     "react-dev-inspector": "^1.1.1",
     "react-dom": "^17.0.0",
     "react-helmet-async": "^1.0.4",
     "umi": "^3.5.0",
-    "umi-plugin-bssula": "^1.0.10",
     "umi-serve": "^1.9.10"
   },
   "devDependencies": {
@@ -82,6 +83,7 @@
     "@umijs/plugin-blocks": "^2.0.5",
     "@umijs/plugin-esbuild": "^1.0.1",
     "@umijs/plugin-openapi": "^1.2.0",
+    "@types/qs": "^6.5.3",
     "@umijs/preset-ant-design-pro": "^1.2.0",
     "@umijs/preset-dumi": "^1.1.7",
     "@umijs/preset-react": "^1.8.17",
@@ -107,5 +109,6 @@
   },
   "gitHooks": {
     "commit-msg": "fabric verify-commit"
-  }
+  },
+  "__npminstall_done": false
 }

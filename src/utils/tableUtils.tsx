@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-21 10:49:19
- * @LastEditTime: 2021-08-16 16:39:57
+ * @LastEditTime: 2021-08-18 20:04:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \operation-platform-front\src\utils\tableUtils.tsx
@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { Tooltip, Badge } from 'antd';
 import { request } from 'bssula';
 import { handleBaseUrlPre } from './utils';
+import { handleCommonTimeRender } from '@/common/businessType';
 
 export const handleTextOverflow = (text: any) => {
   return (
@@ -70,6 +71,10 @@ export const HandleTotalCount = (totalParams: any) => {
   );
 };
 
-export const handleTooltip = (text: any) => {
-  return <Tooltip title={text}>{text}</Tooltip>;
+export const handleTooltip = (text: any, timeTrue?: boolean) => {
+  return (
+    <Tooltip title={timeTrue ? handleCommonTimeRender(text) : text}>
+      {timeTrue ? handleCommonTimeRender(text) : text}
+    </Tooltip>
+  );
 };

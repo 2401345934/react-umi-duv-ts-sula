@@ -2,7 +2,7 @@
  * @Description:
  * @Author: rodchen
  * @Date: 2021-06-27 15:58:26
- * @LastEditTime: 2021-08-17 11:27:19
+ * @LastEditTime: 2021-08-15 17:06:08
  * @LastEditors: Please set LastEditors
  */
 import { queryUserMenuAuth } from '@/services/user';
@@ -22,14 +22,16 @@ export function handleRequestHeader(options?: any) {
     ...options,
     headers: {
       ...options?.headers,
-      'x-app-id': 10000,
+      // appId: 1,
       'sso-sessionid': resposne?.sessionId || sessionId || '',
       'x-account-id': resposne?.id || -1,
       'x-employee-id': resposne?.employeeResVo?.id || 2,
+      'x-app-id': 10010,
     },
   };
   return handleOptions;
 }
+
 // 获取权限信息
 export const fetchUserMenuAuth = async () => {
   // try {

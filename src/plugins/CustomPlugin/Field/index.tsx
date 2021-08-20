@@ -2,11 +2,11 @@
  * @Description:
  * @Author: rodchen
  * @Date: 2021-06-27 15:58:26
- * @LastEditTime: 2021-07-24 11:25:12
+ * @LastEditTime: 2021-07-27 17:26:43
  * @LastEditors: Please set LastEditors
  */
 import { registerFieldPlugin, request } from 'bssula';
-import { Input } from 'antd';
+import { Input, Tooltip } from 'antd';
 import moment from 'moment';
 import { isValidateValue } from '@/utils/utils';
 import RemoteSearch from '@/components/RemoteSearch';
@@ -24,9 +24,7 @@ import RemoteOnLoadTreeSelect from '@/components/RemoteSearch/onLoadTreeSelect';
 import BsSearchSelect from './BsSearchSelect';
 import TreeSelect from './TreeSelect';
 import EditorDemo from './BraftEditor';
-import BsCascader from './BsCascader';
 
-registerFieldPlugin('bs-cascader')(BsCascader, true, true);
 registerFieldPlugin('braft-editor')(EditorDemo, true, true);
 registerFieldPlugin('bs-treeSelect')(TreeSelect, true, true);
 registerFieldPlugin('bs-searchSelect')(BsSearchSelect, true, true);
@@ -84,7 +82,7 @@ registerFieldPlugin('bs-testItemInput')(
 
 /* ***************************** form详情文字项 ******************************** */
 registerFieldPlugin('bs-formText')(
-  ({ ctx, text, id, formatDate, value }: any) => {
+  ({ ctx, text, id, formatDate, value, isEllemepis }: any) => {
     // 处理时间 需要先引入 moment ， 然后在页面的适用时， 在props下传入一个moment的时间格式(如: YYYY-MM-DD)
     if (formatDate) {
       if (!ctx.form.getFieldsValue(true)[id]) return '';
@@ -100,7 +98,25 @@ registerFieldPlugin('bs-formText')(
     } else {
       textVal = text;
     }
-    return <span>{textVal}</span>;
+
+    if (isEllemepis) {
+      return (
+        <Tooltip title={textVal}>
+          <span
+            style={{
+              width: '100%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              // whiteSpace: 'wrap',
+            }}
+          >
+            {textVal}
+          </span>
+        </Tooltip>
+      );
+    }
+
+    return <span style={{ wordWrap: 'break-word' }}>{textVal}</span>;
   },
   true,
   true,

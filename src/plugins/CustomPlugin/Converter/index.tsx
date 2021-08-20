@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-05 09:32:51
- * @LastEditTime: 2021-07-19 19:48:51
+ * @LastEditTime: 2021-08-16 14:15:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \operation-platform-front\src\plugins\CustomPlugin\Converter\index.tsx
@@ -18,6 +18,7 @@ sula.converterType('bs-tableConvertType', (ctx: any) => {
     message.error(response.message || response.msg || response.success);
     return false;
   }
+
   const list =
     (data.list
       ? data.list.length &&

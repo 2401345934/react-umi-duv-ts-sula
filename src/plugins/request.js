@@ -15,7 +15,7 @@ import { history } from '@@/core/history';
 request.use({
   // 执行顺序在发出请求前
   // 是所有请求发出前的钩子中最后执行的。
-  bizRequestAdapter(requestConfig) {
+  bizRequestAdapter (requestConfig) {
     const handleOptions = handleRequestHeader(requestConfig);
     return handleOptions;
   },
@@ -34,7 +34,7 @@ request.use({
   },
   // errorMessageAdapter: 转换后的数据会传入 bizErrorMessageAdapter
   // 用户级错误信息转换
-  bizErrorMessageAdapter(response) {
+  bizErrorMessageAdapter (response) {
     const { msg, code, message, status } = response;
     if (response && response.success === 401) {
       notification.open({
@@ -44,11 +44,11 @@ request.use({
         onClose: async () => {
           localStorage.removeItem('userInfo');
           localStorage.removeItem('buttonAuth');
-          // if (window.location.pathname !== '/user/login') {
-          //   history.replace({
-          //     pathname: '/user/login',
-          //   });
-          // }
+          if (window.location.pathname !== '/user/login') {
+            history.replace({
+              pathname: '/user/login',
+            });
+          }
         },
       });
     }
@@ -56,7 +56,7 @@ request.use({
       return msg || message;
     }
   },
-  bizSuccessMessageAdapter(response, successMessage) {
+  bizSuccessMessageAdapter (response, successMessage) {
     const { success, code, message, status } = response;
     // 禁止显示
     if (successMessage === false) {

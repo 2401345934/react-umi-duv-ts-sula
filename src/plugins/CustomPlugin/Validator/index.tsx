@@ -4,7 +4,7 @@
  * @LastEditTime: 2021-07-12 21:47:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \workbench-sharing-front\src\plugins\CustomPlugin\Validator\index.tsx
+ * @FilePath: \purchase-platform-front\src\plugins\CustomPlugin\Validator\index.tsx
  */
 // @ts-nocheck
 import bssula from 'bssula/es/core';

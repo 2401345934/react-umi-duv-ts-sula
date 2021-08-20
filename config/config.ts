@@ -1,10 +1,10 @@
 /*
  * @Author: your name
- * @Date: 2021-08-19 22:37:41
- * @LastEditTime: 2021-08-19 22:48:08
+ * @Date: 2021-08-20 21:12:58
+ * @LastEditTime: 2021-08-20 21:39:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \xiaominghui\react-umi-duv-ts-sula\config\config.ts
+ * @FilePath: \react-umi-duv-ts-sula\config\config.ts
  */
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
@@ -19,10 +19,10 @@ const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
   antd: {},
+  bssula: {},
   dva: {
     hmr: true,
   },
-  bssula: {},
   layout: {
     // https://umijs.org/zh-CN/plugins/plugin-layout
     locale: true,
@@ -78,5 +78,5 @@ export default defineConfig({
   mfsu: {},
   webpack5: {},
   exportStatic: {},
-  devtool: 'source-map', //开启source-map
+  devtool: 'source-map',
 });

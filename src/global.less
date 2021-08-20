@@ -1,254 +1,9 @@
 @import '~antd/es/style/themes/default.less';
 
-// 字体大小
-@font-size-base: 12px;
-@height-base: 28px;
-@table-font-size: @font-size-base;
-@black: #2c2f2e;
-
-// query-table文字大小
-@form-item-label-font-size: 12px;
-@form-item-label-height: 16px;
-
-// table表格文字大小
-
-// 链接
-// @link-color: #1D92FE;
-@warning-color: #f9a742;
-@success-color: #00c276;
-@error-color: #e82d1e;
-
-// @layout-header-background: #FFFFFF;
-@layout-header-background: #fff;
-
-@layout-sider-background: #fff;
-@layout-sider-background-light: #222224;
-@menu-item-color: #ffffff;
-@menu-item-group-title-color: #ffffff;
-@menu-item-active-bg: rgba(65, 105, 225, 0.1);
-
-@primary-color: #0095da;
-@primary-color-hover: #8bc7ff;
-
-@menu-bg: #222224;
-
-//禁用状态颜色
-@stop-color: #bfbfbf;
-//启用状态颜色
-@open-color: #093bf5;
-
 html,
 body,
 #root {
   height: 100%;
-  color: #1c2529;
-
-  :global {
-    font-family: 'PingFang SC';
-    // libai
-    .ant-pro-global-header.ant-pro-global-header-layout-mix {
-      padding: 0px;
-      background: #fff;
-    }
-
-    .ant-pro-basicLayout-content {
-      margin-top: 80px;
-      margin-left: 376px;
-    }
-
-    .ant-layout-header.ant-pro-fixed-header {
-      top: 32px;
-      height: 64px !important;
-    }
-
-    .ant-pro-global-header-layout-mix .ant-pro-global-header-logo h1 {
-      color: #1c2529;
-    }
-    .ant-pro-global-header-layout-mix .anticon {
-      color: #1c2529;
-    }
-
-    // for right content less styles
-    .top_tip {
-      position: absolute;
-      top: -32px;
-      width: 100%;
-      height: 32px !important;
-      background: #0095da;
-      border: 1px solid rgba(0, 0, 0, 0);
-      filter: drop-shadow(0px 3px 7px rgba(86, 105, 119, 0.15));
-    }
-
-    .top_text {
-      display: flex;
-      justify-content: space-between;
-      width: 1200px;
-      margin: 0 auto;
-      color: #fff;
-      font-size: 12px;
-      line-height: 32px;
-
-      img {
-        position: relative;
-        top: -2px;
-      }
-    }
-
-    .headr_logo {
-      position: absolute;
-      left: 168px;
-      color: #0095da;
-      font-weight: bold;
-      font-size: 20px;
-      line-height: 64px;
-      text-align: left;
-
-      img {
-        position: relative;
-        top: -2px;
-        height: 49px;
-        margin: 8px 0 7px;
-      }
-
-      span {
-        display: inline-block;
-        width: 20px;
-        color: #f0f2f5;
-        font-size: 18px;
-        text-align: center;
-      }
-
-      svg {
-        color: #0095da;
-      }
-    }
-
-    .ant-pro-page-container-warp {
-      height: 17px;
-      margin-left: 6px;
-      font-size: 12px;
-      background: none;
-    }
-
-    .ant-page-header-heading {
-      display: none;
-    }
-
-    .ant-page-header.has-breadcrumb.ant-page-header-ghost {
-      padding: 0;
-    }
-
-    .ant-tabs-nav-wrap {
-      height: 56px;
-      background: #fff;
-
-      .ant-tabs-tab {
-        justify-content: center;
-        width: 120px;
-        text-align: center;
-      }
-    }
-
-    .ant-tabs-tab + .ant-tabs-tab {
-      margin: 0;
-    }
-
-    .ant-form.ant-form-horizontal {
-      margin-bottom: 16px;
-    }
-
-    .ant-table-title {
-      height: 72px;
-    }
-
-    .sula-table-action-wrapper {
-      margin-top: 9px;
-    }
-
-    .ant-table-thead > tr > th {
-      height: 40px !important;
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-      color: rgba(28, 37, 41, 0.72) !important;
-      font-weight: normal !important;
-      font-size: 14px;
-      font-family: 'PingFang SC';
-      line-height: 40px !important;
-      text-align: left;
-      background: #f6f8fb;
-    }
-
-    .ant-image {
-      display: flex;
-      flex-direction: row;
-      width: 64px;
-      height: 64px;
-
-      .ant-image-img {
-        height: 64px;
-      }
-    }
-
-    // 修复菜单hover被umi样式覆盖问题
-    .ant-menu-item-active,
-    .ant-menu-item:hover,
-    .ant-menu-submenu-active,
-    .ant-menu-submenu-title:hover,
-    .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open {
-      color: @primary-color !important;
-    }
-
-    .ant-menu {
-      color: #fff;
-      font-size: 14px; // 菜单统一字体大小
-    }
-    .sula-form-action-bottom {
-      justify-content: center;
-    }
-
-    .ant-menu-item-selected {
-      background-color: @primary-color;
-    }
-
-    .ant-pro-page-container-children-content {
-      margin: 16px 0 24px;
-    }
-
-    .ant-pro-top-nav-header-main {
-      padding-left: 0 !important;
-    }
-
-    .ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
-      background-color: #001529;
-    }
-
-    .ant-card-body {
-      margin-top: 10px;
-    }
-
-    .sula-basic-query-table-fields {
-      &-wrapper {
-        float: right;
-      }
-    }
-
-    .sula-basic-query-table .ant-table-thead > tr > th:first-child {
-      padding-left: 16px !important;
-    }
-
-    .sula-basic-query-table .ant-table-tbody > tr > td:first-child {
-      padding-left: 16px !important;
-    }
-
-    .ant-pro-grid-content {
-      padding: 0 14px 0 6px;
-    }
-
-    .sula-basic-query-table-fields-wrapper .ant-row {
-      flex-flow: unset;
-      justify-content: flex-end;
-    }
-  }
 }
 
 .colorWeak {
@@ -257,6 +12,9 @@ body,
 
 .ant-layout {
   min-height: 100vh;
+}
+.ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
+  left: unset;
 }
 
 canvas {
@@ -274,120 +32,15 @@ ol {
   list-style: none;
 }
 
-.customAdomStyle {
-  color: @primary-color;
-  cursor: pointer;
-
-  &:hover {
-    color: @primary-color-hover;
-  }
-}
-
-.customAdomDisableStyle {
-  color: rgba(190, 184, 184, 1);
-}
-
-.customEllipse {
-  display: -webkit-box;
-  overflow: hidden;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0;
-  text-align: left;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 1; // （行数）-----默认1行
-  //autoprefixer: off;
-  -webkit-box-orient: vertical;
-  //autoprefixer: on
-}
-
-.site-drawer-render-in-current-wrapper {
-  position: relative;
-  height: 800px;
-  border-radius: 2px;
-}
-
-//去除BPMN logo
-.bjs-powered-by {
-  display: none;
-}
-
-//antd input校验框 红色提示
-.url-check .ant-form-item-explain {
-  color: #ff4d4f;
-}
-
-//属性管理 属性项设置 日期不换行
-.item-properties-date-type .ant-radio-wrapper {
-  display: block;
-}
-
-//取消导入资源的边框和背景色
-div.antd-propages-user-center-authority-resourceindex-content {
-  background-color: #fff;
-  border: none;
-}
-
-//角色管理查询输入框增加宽度
-.ant-input-affix-wrapper {
-  width: 105%;
-}
-
-.customUpload {
-  &.ant-upload-disabled {
-    display: none;
-  }
-}
-
-.stopColor {
-  color: @stop-color;
-}
-
-.openColor {
-  color: @open-color;
-}
-
-.rejectColor {
-  color: @error-color;
-}
-
-.check-status {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  color: #093bf5;
-  font-weight: 200;
-  font-size: 16px;
-}
-
-.check-title {
-  padding-top: 45px;
-}
-
-.check-rejectReason {
-  position: relative;
-  top: -80px;
-  left: 450px;
-}
-
-.reject-status {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  color: red;
-  font-weight: 200;
-  font-size: 16px;
-}
-
 @media (max-width: @screen-xs) {
   .ant-table {
     width: 100%;
     overflow-x: auto;
-
     &-thead > tr,
     &-tbody > tr {
       > th,
       > td {
         white-space: pre;
-
         > span {
           display: block;
         }
@@ -396,66 +49,9 @@ div.antd-propages-user-center-authority-resourceindex-content {
   }
 }
 
-// 兼容IE11
+// Compatible with IE11
 @media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
   body .ant-design-pro > .ant-layout {
     min-height: 100vh;
-  }
-}
-
-//修复antd的时间组件不能自适应宽度的问题
-.add-edit-page {
-  margin: 0 20px;
-
-  .ant-card {
-    margin-bottom: 20px;
-  }
-
-  .ant-picker {
-    display: block;
-  }
-
-  .ant-input-number {
-    width: 100%;
-  }
-}
-
-.banner-box {
-  .tipper {
-    margin: 20px 0;
-  }
-
-  .images-item {
-    position: relative;
-    display: inline-block;
-    box-sizing: content-box;
-    width: 300px;
-    height: 200px;
-    margin-right: 20px;
-    border: 1px solid #ccc;
-
-    .close-btn {
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-  }
-}
-
-.case {
-  .sula-template-query-table-fields-wrapper {
-    > .ant-row {
-      > .ant-col-16 {
-        display: none;
-      }
-    }
-  }
-}
-
-.editor-content {
-  padding-top: 5px;
-
-  img {
-    width: 100%;
   }
 }

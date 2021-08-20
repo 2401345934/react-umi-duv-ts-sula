@@ -1,10 +1,9 @@
 /*
- * @Author: your name
- * @Date: 2021-08-19 22:37:41
- * @LastEditTime: 2021-08-19 22:49:32
+ * @Description:
+ * @Author: rodchen
+ * @Date: 2021-06-27 15:58:26
+ * @LastEditTime: 2021-08-20 21:19:49
  * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \xiaominghui\react-umi-duv-ts-sula\src\access.ts
  */
 export default function access(initialState: { userMenuAuth?: API.AuthMenuData[] }) {
   // const { userMenuAuth } = initialState || {};

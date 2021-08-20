@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-08 11:02:59
- * @LastEditTime: 2021-07-21 10:11:30
+ * @LastEditTime: 2021-07-28 21:07:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \yingzi-web-psc-sellerconsole\src\sula\customerPlugin\fields\BraftEditor\index.tsx
@@ -67,12 +67,11 @@ export default class EditorDemo extends React.Component {
     const successFn = (response: any) => {
       // 假设服务端直接返回文件上传后的地址
       // 上传成功后调用param.success并传入上传后的文件地址
-
       const baseUrl = JSON.parse(xhr.responseText);
-      if (baseUrl.data && baseUrl.data.value) {
+      if (baseUrl?.status === '0' && baseUrl.data.url) {
         param.success({
           // url: xhr.responseText,
-          url: baseUrl.data.value,
+          url: baseUrl.data.url,
           // meta: {
           //   id: 'xxx',
           //   title: 'xxx',
