@@ -1,0 +1,109 @@
+@import '~antd/es/style/themes/default.less';
+
+.sider {
+  position: fixed;
+  top: 48px;
+  left: 0px;
+  z-index: 100;
+  display: flex;
+  width: 360px;
+  height: 100vh;
+  padding-right: 16px;
+
+  &_first {
+    width: 168px;
+    height: 100vh;
+    padding-top: 16px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 16px;
+    background: #1d2225;
+
+    &_item {
+      height: 48px;
+      padding-left: 24px;
+      line-height: 48px;
+
+      &_active {
+        background: #0095da;
+      }
+
+      &:hover {
+        background: #0095da;
+        cursor: pointer;
+      }
+
+      &_icon {
+        display: inline-block;
+        width: 10px;
+        margin-right: 16px;
+      }
+    }
+  }
+
+  &_second {
+    width: 192px;
+    height: 100vh;
+    overflow: auto;
+    background: #fff;
+
+    &_item_1 {
+      position: relative;
+      height: 48px;
+      color: rgba(28, 37, 41, 0.72);
+      font-size: 14px;
+      line-height: 48px;
+      -moz-user-select: none; /*火狐*/
+      -webkit-user-select: none; /*webkit浏览器*/
+      -ms-user-select: none; /*IE10*/
+      -khtml-user-select: none; /*早期浏览器*/
+      user-select: none;
+
+      &_dolt {
+        position: relative;
+        top: -2px;
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin-right: 4px;
+        margin-left: 12px;
+        background: transparent;
+        background: #0095da;
+        border: 1px solid #707070;
+        border-radius: 3px;
+      }
+
+      &_action {
+        position: absolute;
+        right: 30px;
+        color: gray;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+
+    &_item_2 {
+      display: none;
+      height: 40px;
+      color: #1c2529;
+      font-size: 14px;
+      line-height: 40px;
+      text-align: left;
+      text-indent: 40px;
+
+      a {
+        color: #1c2529;
+      }
+
+      &_active {
+        display: block;
+      }
+
+      &:hover,
+      &_click {
+        color: #0095da;
+        background: #0095da40;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-08-20 21:12:58
+ * @LastEditTime: 2021-08-26 02:24:48
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \react-umi-duv-ts-sula\src\pages\Welcome.tsx
+ */
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Typography } from 'antd';
@@ -15,7 +23,7 @@ const CodePreview: React.FC = ({ children }) => (
 export default (): React.ReactNode => {
   const intl = useIntl();
   return (
-    <PageContainer>
+    <>
       <Card>
         <Alert
           message={intl.formatMessage({
@@ -58,6 +66,6 @@ export default (): React.ReactNode => {
         </Typography.Text>
         <CodePreview>yarn add @ant-design/pro-layout</CodePreview>
       </Card>
-    </PageContainer>
+    </>
   );
 };

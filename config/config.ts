@@ -20,6 +20,9 @@ export default defineConfig({
   hash: true,
   antd: {},
   bssula: {},
+  history: {
+    type: 'hash',
+  },
   dva: {
     hmr: true,
   },

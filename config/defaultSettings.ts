@@ -1,20 +1,29 @@
+/*
+ * @Description:
+ * @Author: rodchen
+ * @Date: 2021-06-27 15:58:26
+ * @LastEditTime: 2021-08-26 02:20:51
+ * @LastEditors: Please set LastEditors
+ */
+import React from 'react';
 import { Settings as LayoutSettings } from '@ant-design/pro-layout';
 
 const Settings: LayoutSettings & {
   pwa?: boolean;
-  logo?: string;
+  logo?: string | React.ReactNode;
 } = {
-  navTheme: 'light',
+  navTheme: 'dark',
   // 拂晓蓝
-  primaryColor: '#1890ff',
+  primaryColor: '#0095DA',
   layout: 'mix',
   contentWidth: 'Fluid',
+  splitMenus: false,
   fixedHeader: false,
-  fixSiderbar: true,
+  fixSiderbar: false,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: '',
   pwa: false,
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+  logo: false,
   iconfontUrl: '',
 };
 
