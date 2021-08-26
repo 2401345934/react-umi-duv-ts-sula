@@ -2,7 +2,7 @@
  * @Description:
  * @Author: rodchen
  * @Date: 2021-06-27 15:58:26
- * @LastEditTime: 2021-08-26 02:20:51
+ * @LastEditTime: 2021-08-26 16:35:27
  * @LastEditors: Please set LastEditors
  */
 import React from 'react';
@@ -17,9 +17,10 @@ const Settings: LayoutSettings & {
   primaryColor: '#0095DA',
   layout: 'mix',
   contentWidth: 'Fluid',
+  // 一级是菜单放到最上面
   splitMenus: false,
-  fixedHeader: false,
-  fixSiderbar: false,
+  fixedHeader: true,
+  fixSiderbar: true,
   colorWeak: false,
   title: '',
   pwa: false,
