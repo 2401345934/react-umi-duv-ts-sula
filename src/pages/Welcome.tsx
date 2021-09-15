@@ -1,71 +1,195 @@
-/*
- * @Author: your name
- * @Date: 2021-08-20 21:12:58
- * @LastEditTime: 2021-08-26 02:24:48
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: \react-umi-duv-ts-sula\src\pages\Welcome.tsx
- */
-import React from 'react';
-import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Alert, Typography } from 'antd';
-import { useIntl, FormattedMessage } from 'umi';
-import styles from './Welcome.less';
+import React, { useRef } from 'react';
+import { PlusOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { Button, Tag, Space, Menu, Dropdown } from 'antd';
+import type { ProColumns, ActionType } from '@ant-design/pro-table';
+import ProTable, { TableDropdown } from '@ant-design/pro-table';
+import request from 'umi-request';
 
-const CodePreview: React.FC = ({ children }) => (
-  <pre className={styles.pre}>
-    <code>
-      <Typography.Text copyable>{children}</Typography.Text>
-    </code>
-  </pre>
+type GithubIssueItem = {
+  url: string;
+  id: number;
+  number: number;
+  title: string;
+  labels: {
+    name: string;
+    color: string;
+  }[];
+  state: string;
+  comments: number;
+  created_at: string;
+  updated_at: string;
+  closed_at?: string;
+};
+
+const columns: ProColumns<GithubIssueItem>[] = [
+  {
+    dataIndex: 'index',
+    valueType: 'indexBorder',
+    width: 48,
+  },
+  {
+    title: '标题',
+    dataIndex: 'title',
+    copyable: true,
+    ellipsis: true,
+    tip: '标题过长会自动收缩',
+    formItemProps: {
+      rules: [
+        {
+          required: true,
+          message: '此项为必填项',
+        },
+      ],
+    },
+  },
+  {
+    title: '状态',
+    dataIndex: 'state',
+    filters: true,
+    onFilter: true,
+    valueType: 'select',
+    valueEnum: {
+      all: { text: '全部', status: 'Default' },
+      open: {
+        text: '未解决',
+        status: 'Error',
+      },
+      closed: {
+        text: '已解决',
+        status: 'Success',
+        disabled: true,
+      },
+      processing: {
+        text: '解决中',
+        status: 'Processing',
+      },
+    },
+  },
+  {
+    title: '标签',
+    dataIndex: 'labels',
+    valueType: 'text',
+    formItemProps: () => ({
+      name: 'qp-labels-like',
+    }),
+    renderFormItem: (_, { defaultRender }) => {
+      return defaultRender(_);
+    },
+    render: (_, record) => (
+      <Space>
+        {record.labels.map(({ name, color }) => (
+          <Tag color={color} key={name}>
+            {name}
+          </Tag>
+        ))}
+      </Space>
+    ),
+  },
+  {
+    title: '创建时间',
+    key: 'showTime',
+    dataIndex: 'created_at',
+    valueType: 'dateTime',
+    sorter: true,
+    hideInSearch: true,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'created_at',
+    valueType: 'dateRange',
+    hideInTable: true,
+    search: {
+      transform: (value) => {
+        return {
+          startTime: value[0],
+          endTime: value[1],
+        };
+      },
+    },
+  },
+  {
+    title: '操作',
+    valueType: 'option',
+    render: (text, record, _, action) => [
+      <a
+        key="editable"
+        onClick={() => {
+          action?.startEditable?.(record.id);
+        }}
+      >
+        编辑
+      </a>,
+      <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
+        查看
+      </a>,
+      <TableDropdown
+        key="actionGroup"
+        onSelect={() => action?.reload()}
+        menus={[
+          { key: 'copy', name: '复制' },
+          { key: 'delete', name: '删除' },
+        ]}
+      />,
+    ],
+  },
+];
+
+const menu = (
+  <Menu>
+    <Menu.Item key="1">1st item</Menu.Item>
+    <Menu.Item key="2">2nd item</Menu.Item>
+    <Menu.Item key="3">3rd item</Menu.Item>
+  </Menu>
 );
 
-export default (): React.ReactNode => {
-  const intl = useIntl();
+export default () => {
+  const actionRef = useRef<ActionType>();
   return (
-    <>
-      <Card>
-        <Alert
-          message={intl.formatMessage({
-            id: 'pages.welcome.alertMessage',
-            defaultMessage: 'Faster and stronger heavy-duty components have been released.',
-          })}
-          type="success"
-          showIcon
-          banner
-          style={{
-            margin: -12,
-            marginBottom: 24,
-          }}
-        />
-        <Typography.Text strong>
-          <FormattedMessage id="pages.welcome.advancedComponent" defaultMessage="Advanced Form" />{' '}
-          <a
-            href="https://procomponents.ant.design/components/table"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
-          </a>
-        </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-table</CodePreview>
-        <Typography.Text
-          strong
-          style={{
-            marginBottom: 12,
-          }}
-        >
-          <FormattedMessage id="pages.welcome.advancedLayout" defaultMessage="Advanced layout" />{' '}
-          <a
-            href="https://procomponents.ant.design/components/layout"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
-          </a>
-        </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-layout</CodePreview>
-      </Card>
-    </>
+    <ProTable<GithubIssueItem>
+      columns={columns}
+      actionRef={actionRef}
+      request={async (params = {}) => {
+        return request<{
+          data: GithubIssueItem[];
+        }>('https://proapi.azurewebsites.net/github/issues', {
+          params,
+        });
+      }}
+      editable={{
+        type: 'multiple',
+      }}
+      rowKey="id"
+      search={{
+        labelWidth: 'auto',
+      }}
+      form={{
+        // ignoreRules: false,
+        // 由于配置了 transform，提交的参与与定义的不同这里需要转化一下
+        syncToUrl: (values, type) => {
+          if (type === 'get') {
+            return {
+              ...values,
+              created_at: [values.startTime, values.endTime],
+            };
+          }
+          return values;
+        },
+      }}
+      pagination={{
+        pageSize: 5,
+      }}
+      dateFormatter="string"
+      headerTitle="高级表格"
+      toolBarRender={() => [
+        <Button key="button" icon={<PlusOutlined />} type="primary">
+          新建
+        </Button>,
+        <Dropdown key="menu" overlay={menu}>
+          <Button>
+            <EllipsisOutlined />
+          </Button>
+        </Dropdown>,
+      ]}
+    />
   );
 };
