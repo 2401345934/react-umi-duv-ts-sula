@@ -2,7 +2,7 @@
  * @Description:
  * @Author: rodchen
  * @Date: 2021-06-27 15:58:26
- * @LastEditTime: 2021-08-26 16:35:27
+ * @LastEditTime: 2021-09-15 17:22:09
  * @LastEditors: Please set LastEditors
  */
 import React from 'react';
@@ -12,10 +12,10 @@ const Settings: LayoutSettings & {
   pwa?: boolean;
   logo?: string | React.ReactNode;
 } = {
-  navTheme: 'dark',
+  navTheme: 'light',
   // 拂晓蓝
   primaryColor: '#0095DA',
-  layout: 'mix',
+  layout: 'side',
   contentWidth: 'Fluid',
   // 一级是菜单放到最上面
   splitMenus: false,
@@ -25,6 +25,9 @@ const Settings: LayoutSettings & {
   title: '',
   pwa: false,
   logo: false,
+  menu: {
+    locale: true,
+  },
   iconfontUrl: '',
 };
 

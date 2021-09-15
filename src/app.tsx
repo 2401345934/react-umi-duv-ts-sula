@@ -1,13 +1,13 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import type { RunTimeLayoutConfig } from 'umi';
+import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
 import { history, Link } from 'umi';
 import RightContent from '@/components/RightContent';
 import { notification } from 'antd';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
-import { BookOutlined, LinkOutlined } from '@ant-design/icons';
+// import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import { handleRequestHeader } from './utils/requestUtils';
-import MenuRenderFunction from './lib/MenuRenderCom';
+// import MenuRenderFunction from './lib/MenuRenderCom';
 import RenderPageFunction from './lib/RenderPage';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -50,41 +50,42 @@ export async function getInitialState(): Promise<{
   };
 }
 
+// 多页签模式需要注释掉layout
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
-export const layout: RunTimeLayoutConfig = ({ initialState }) => {
-  return {
-    rightContentRender: () => <RightContent />,
-    disableContentMargin: false,
-    waterMarkProps: {
-      content: initialState?.currentUser?.name,
-    },
-    // footerRender: () => <Footer />,
-    // menuHeaderRender: () => {},
-    // 开启有赞的菜单模式 但是需要改样式
-    // menuRender: (props: any) => {
-    //   const { location } = history;
-    //   if (location.pathname === '/user/login') {
-    //     return undefined;
-    //   }
-    //   if (!initialState?.currentUser) {
-    //     return undefined;
-    //   }
+// export const layout: RunTimeLayoutConfig = ({ initialState }) => {
+//   return {
+//     rightContentRender: () => <RightContent />,
+//     disableContentMargin: false,
+//     waterMarkProps: {
+//       content: initialState?.currentUser?.name,
+//     },
+//     // footerRender: () => <Footer />,
+//     // menuHeaderRender: () => {},
+//     // 开启有赞的菜单模式 但是需要改样式
+//     // menuRender: (props: any) => {
+//     //   const { location } = history;
+//     //   if (location.pathname === '/user/login') {
+//     //     return undefined;
+//     //   }
+//     //   if (!initialState?.currentUser) {
+//     //     return undefined;
+//     //   }
 
-    //   return <MenuRenderFunction {...props} />;
-    // },
-    childrenRender: RenderPageFunction(),
-    onPageChange: () => {
-      const { location } = history;
-      // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath);
-      }
-    },
-    // 自定义 403 页面
-    // unAccessible: <div>unAccessible</div>,
-    ...initialState?.settings,
-  };
-};
+//     //   return <MenuRenderFunction {...props} />;
+//     // },
+//     childrenRender: RenderPageFunction(),
+//     onPageChange: () => {
+//       const { location } = history;
+//       // 如果没有登录，重定向到 login
+//       if (!initialState?.currentUser && location.pathname !== loginPath) {
+//         history.push(loginPath);
+//       }
+//     },
+//     // 自定义 403 页面
+//     // unAccessible: <div>unAccessible</div>,
+//     ...initialState?.settings,
+//   };
+// };
 
 // 请求拦截
 const requestInterceptors = [

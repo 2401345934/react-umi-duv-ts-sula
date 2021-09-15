@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-20 21:12:58
- * @LastEditTime: 2021-08-20 21:39:56
+ * @LastEditTime: 2021-09-15 18:01:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react-umi-duv-ts-sula\config\config.ts
@@ -26,12 +26,14 @@ export default defineConfig({
   dva: {
     hmr: true,
   },
-  layout: {
-    // https://umijs.org/zh-CN/plugins/plugin-layout
-    locale: true,
-    siderWidth: 208,
-    ...defaultSettings,
-  },
+  layout: false, // 多页签
+
+  // layout: {
+  //   // https://umijs.org/zh-CN/plugins/plugin-layout
+  //   locale: true,
+  //   siderWidth: 208,
+  //   ...defaultSettings,
+  // },
   // https://umijs.org/zh-CN/plugins/plugin-locale
   locale: {
     // default zh-CN
