@@ -63,7 +63,7 @@ const Login: React.FC = () => {
         if (!history) return;
         const { query } = history.location;
         const { redirect } = query as { redirect: string };
-        history.push(redirect || '/');
+        history.push(redirect || '/welcome');
         return;
       }
       // 如果失败去设置用户错误信息
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
       <div className={styles.content}>
         <div className={styles.top}>
           <div className={styles.header}>
-            <Link to="/">
+            <Link to="/welcome">
               <img alt="logo" className={styles.logo} src="/logo.svg" />
               <span className={styles.title}>Ant Design</span>
             </Link>

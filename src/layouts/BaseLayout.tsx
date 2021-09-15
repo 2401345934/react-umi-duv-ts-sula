@@ -442,8 +442,15 @@ class BasicLayout extends React.PureComponent {
             (inneritem, innerIndex) => innerIndex <= index,
           );
         }
+        if (type === 3) {
+          // 关闭
+          newListenRouterState = [{ key: '/welcome', tab: '欢迎', closable: false }];
+          newListenRouterKey = ['/welcome'];
+          history.push('/welcome');
+        } else {
+          history.push(item.key);
+        }
 
-        history.push(item.key);
         updateState(newListenRouterState, newListenRouterKey);
         e.preventDefault();
         e.stopPropagation();
@@ -473,6 +480,14 @@ class BasicLayout extends React.PureComponent {
                     }}
                   >
                     关闭右侧
+                  </div>
+                  <div
+                    className="popover-div"
+                    onClick={(e) => {
+                      onClick(e, 3);
+                    }}
+                  >
+                    关闭全部
                   </div>
                 </div>
               }
